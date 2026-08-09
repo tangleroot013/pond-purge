@@ -1,0 +1,54 @@
+{
+  "project": {
+    "name": "Pond-Purge",
+    "version": "1.0.0",
+    "description": "High-integrity music library canonicalizer and cleanup suite",
+    "author": "bilbywilby",
+    "coach": "Carter the Duck",
+    "license": "MIT",
+    "language": "Python 3.8+"
+  },
+  "pipeline": {
+    "stages": [
+      {
+        "stage": 1,
+        "name": "Migration",
+        "script": "build_music_library.py",
+        "purpose": "Consolidate fragmented sources into a single deduplicated library using SHA-256 hashing.",
+        "critical_output": "music_manifest.json"
+      },
+      {
+        "stage": 2,
+        "name": "Grooming",
+        "script": "cleanup_music_library.py",
+        "purpose": "Remove junk files, fix broken audio, recover missing tags, and prune empty directories.",
+        "dependency": "mutagen"
+      }
+    ]
+  },
+  "configuration_defaults": {
+    "paths": {
+      "canonical_library": "~/Music",
+      "manifest_file": "~/music_manifest.json"
+    },
+    "filters": {
+      "audio_extensions": [".mp3", ".flac", ".m4a", ".wav", ".ogg", ".aac", ".wma", ".aiff", ".opus"],
+      "image_extensions": [".jpg", ".jpeg", ".png", ".webp"],
+      "stray_filenames": [".ds_store", "thumbs.db", "desktop.ini"],
+      "stray_extensions": [".part", ".crdownload", ".tmp", ".download", ".url", ".ini", ".nfo", ".bak", ".torrent"]
+    },
+    "hashing": {
+      "algorithm": "SHA-256",
+      "chunk_size_bytes": 65536
+    }
+  },
+  "requirements": {
+    "python_packages": [
+      {
+        "name": "mutagen",
+        "purpose": "Audio metadata reading and writing",
+        "install_cmd": "pip install mutagen"
+      }
+    ]
+  }
+}
