@@ -11,7 +11,7 @@ Unlike simple "copy-paste" methods, Pond-Purge uses **cryptographic hashing (SHA
 The system operates in two distinct phases:
 
 ### Phase 1: The Migration (`build_music_library.py`)
-**Goal:** Ingest files from various sources and consolidate them into a master directory.
+**Goal:** Ingest files from various sources and consolidate them into a master "MUSIC" directory.
 - **Content-Addressable Storage:** Every file is hashed. If the hash exists in the manifest, the file is skipped.
 - **Source Agnostic:** Can loop through any number of mount points (e.g., `/mnt/chromeos/removable/*`).
 - **Manifest Tracking:** Maintains a `music_manifest.json` which acts as the "Source of Truth" for the entire library.
